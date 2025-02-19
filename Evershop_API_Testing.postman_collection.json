@@ -1,0 +1,152 @@
+{
+	"info": {
+		"_postman_id": "c3812b84-18c4-471c-b152-a48f19d59dde",
+		"name": "Evershop_API_Testing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37742796"
+	},
+	"item": [
+		{
+			"name": "shoe_color",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var template = `\r",
+							"<style type=\"text/css\">\r",
+							"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+							"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+							"    .tftable tr {background-color:#ffffff;}\r",
+							"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+							"    .tftable tr:hover {background-color:#e0ffff;}\r",
+							"</style>\r",
+							"\r",
+							"<table class=\"tftable\" border=\"1\">\r",
+							"    <tr>\r",
+							"        <th>Attribute Name</th>\r",
+							"        <th>Attribute Code</th>\r",
+							"        <th>Option Text</th>\r",
+							"    </tr>\r",
+							"    \r",
+							"    {{#each response.eContext.graphqlResponse.e248uix4m5ibqb5y.attributes}}\r",
+							"        <tr>\r",
+							"            <td>{{attributeName}}</td>\r",
+							"            <td>{{attributeCode}}</td>\r",
+							"            <td>{{optionText}}</td>\r",
+							"        </tr>\r",
+							"    {{/each}}\r",
+							"</table>\r",
+							"`;\r",
+							"\r",
+							"function constructVisualizerPayload() {\r",
+							"    return {response: pm.response.json().eContext.graphqlResponse.e248uix4m5ibqb5y};\r",
+							"}\r",
+							"\r",
+							"pm.visualizer.set(template, constructVisualizerPayload());\r",
+							"\r",
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response time is within an acceptable range\", function () {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Success field should exist and be true\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.have.property('success', true);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Validate the structure of the eContext object\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.eContext).to.exist.and.to.be.an('object');\r",
+							"    // Add more specific checks for nested properties if needed\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Gallery array contains at least one element with a thumb property\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.have.property('eContext');\r",
+							"    pm.expect(responseData.eContext).to.have.property('graphqlResponse');\r",
+							"    pm.expect(responseData.eContext.graphqlResponse).to.have.property('e248uix4m5ibqb60');\r",
+							"    pm.expect(responseData.eContext.graphqlResponse.e248uix4m5ibqb60.gallery).to.be.an('array').that.is.not.empty;\r",
+							"    pm.expect(responseData.eContext.graphqlResponse.e248uix4m5ibqb60.gallery[0]).to.have.property('thumb');\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://demo.evershop.io/men/nike-react-phantom-run-flyknit-2-180?color=14&ajax=true",
+					"protocol": "https",
+					"host": [
+						"demo",
+						"evershop",
+						"io"
+					],
+					"path": [
+						"men",
+						"nike-react-phantom-run-flyknit-2-180"
+					],
+					"query": [
+						{
+							"key": "color",
+							"value": "14"
+						},
+						{
+							"key": "ajax",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "shoe_size",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://demo.evershop.io/men/nike-react-phantom-run-flyknit-2-180?size=25&ajax=true",
+					"protocol": "https",
+					"host": [
+						"demo",
+						"evershop",
+						"io"
+					],
+					"path": [
+						"men",
+						"nike-react-phantom-run-flyknit-2-180"
+					],
+					"query": [
+						{
+							"key": "size",
+							"value": "25"
+						},
+						{
+							"key": "ajax",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
